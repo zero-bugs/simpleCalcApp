@@ -5,7 +5,7 @@ from urllib3.connectionpool import xrange
 
 class CalcFunctionUtils:
     template1 = "利率（{}）：{:.4%}"
-    template2 = "第{:>d}期\t本金：{:.2f}\t利息：{:.2f}，本息和：{:.2f} 元"
+    template2 = "第{:>d}期\t本金：{:.2f} 元\t利息：{:.2f} 元\t本息和：{:.2f} 元"
 
     @staticmethod
     def calcFixCapitalSimpleInterest(capital, interestRate, period):
@@ -67,9 +67,9 @@ class CalcFunctionUtils:
                 return interestRate
         elif periodDim == '按天':
             if interestRateDim == '年息':
-                return 365 * interestRate
+                return interestRate / 365
             elif interestRateDim == '月息':
-                return 30 * interestRate
+                return interestRate / 30
             else:
                 return interestRate
 

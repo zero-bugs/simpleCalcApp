@@ -80,7 +80,7 @@
         <string> %</string>
        </property>
        <property name="value">
-        <double>3.250000000000000</double>
+        <double>3.850000000000000</double>
        </property>
       </widget>
      </item>
@@ -185,12 +185,22 @@
        </item>
        <item>
         <property name="text">
+         <string>单利每期定存利损</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>复利定存</string>
         </property>
        </item>
        <item>
         <property name="text">
          <string>复利每期定存</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>复利每期定存利损</string>
         </property>
        </item>
        <item>
