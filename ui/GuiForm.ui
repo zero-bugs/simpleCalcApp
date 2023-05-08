@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>796</width>
-    <height>537</height>
+    <width>727</width>
+    <height>732</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,13 +17,13 @@
    <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>60</y>
-      <width>311</width>
-      <height>121</height>
+      <x>20</x>
+      <y>40</y>
+      <width>321</width>
+      <height>71</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0" columnstretch="1,2,1">
+    <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0" columnstretch="1,2,1">
      <property name="leftMargin">
       <number>1</number>
      </property>
@@ -36,13 +36,6 @@
      <property name="bottomMargin">
       <number>1</number>
      </property>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>分期</string>
-       </property>
-      </widget>
-     </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
@@ -103,47 +96,21 @@
        </item>
       </widget>
      </item>
-     <item row="3" column="2">
-      <widget class="QComboBox" name="periodDim">
-       <item>
-        <property name="text">
-         <string>按年</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>按月</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>按天</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QSpinBox" name="period">
-       <property name="maximum">
-        <number>720</number>
-       </property>
-       <property name="value">
-        <number>24</number>
-       </property>
-      </widget>
-     </item>
     </layout>
    </widget>
    <widget class="QWidget" name="gridLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>60</y>
-      <width>313</width>
+      <x>370</x>
+      <y>40</y>
+      <width>318</width>
       <height>123</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,2,1">
+     <property name="leftMargin">
+      <number>1</number>
+     </property>
      <property name="rightMargin">
       <number>0</number>
      </property>
@@ -215,13 +182,6 @@
        </item>
       </widget>
      </item>
-     <item row="0" column="2">
-      <widget class="QPushButton" name="optCalcCapital">
-       <property name="text">
-        <string>执行</string>
-       </property>
-      </widget>
-     </item>
      <item row="3" column="0">
       <widget class="QLabel" name="label_8">
        <property name="text">
@@ -261,66 +221,323 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="verticalLayoutWidget">
+   <widget class="QWidget" name="gridLayoutWidget_3">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>210</y>
-      <width>661</width>
-      <height>241</height>
+      <x>20</x>
+      <y>120</y>
+      <width>321</width>
+      <height>88</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item>
-      <layout class="QFormLayout" name="formLayout">
-       <property name="fieldGrowthPolicy">
-        <enum>QFormLayout::FieldsStayAtSizeHint</enum>
-       </property>
-       <item row="0" column="0">
-        <widget class="QPushButton" name="optCalcDetails">
-         <property name="text">
-          <string>详细</string>
-         </property>
-        </widget>
+    <layout class="QGridLayout" name="gridLayout_4" columnstretch="1,2,1">
+     <property name="leftMargin">
+      <number>1</number>
+     </property>
+     <item row="0" column="2">
+      <widget class="QComboBox" name="periodDim">
+       <item>
+        <property name="text">
+         <string>按年</string>
+        </property>
        </item>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="optSaveResult">
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>保存</string>
-         </property>
-        </widget>
+       <item>
+        <property name="text">
+         <string>按月</string>
+        </property>
        </item>
-      </layout>
+       <item>
+        <property name="text">
+         <string>按天</string>
+        </property>
+       </item>
+      </widget>
      </item>
-     <item>
-      <widget class="QPlainTextEdit" name="detailsText"/>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>分期</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QSpinBox" name="period">
+       <property name="maximum">
+        <number>720</number>
+       </property>
+       <property name="value">
+        <number>24</number>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_15">
+       <property name="text">
+        <string>末次存款</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QDateEdit" name="dateEdit_2">
+       <property name="date">
+        <date>
+         <year>2015</year>
+         <month>1</month>
+         <day>1</day>
+        </date>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_14">
+       <property name="text">
+        <string>首次存款</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QDateEdit" name="dateEdit_3">
+       <property name="date">
+        <date>
+         <year>2023</year>
+         <month>1</month>
+         <day>1</day>
+        </date>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget_4">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>250</y>
+      <width>671</width>
+      <height>301</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_5" columnstretch="1,1,1,6,6">
+     <item row="0" column="1">
+      <widget class="QPushButton" name="optCalcDetails">
+       <property name="text">
+        <string>详细</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QPushButton" name="optCalcCapital">
+       <property name="text">
+        <string>执行</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="optSaveResult">
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>保存</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" colspan="5">
+      <widget class="QPlainTextEdit" name="detailsText">
+       <property name="tabStopWidth">
+        <number>100</number>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QLabel" name="label_16">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QLabel" name="label_17">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGraphicsView" name="graphicsView">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>570</y>
+      <width>341</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="toolTipDuration">
+     <number>0</number>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::WinPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <property name="lineWidth">
+     <number>1</number>
+    </property>
+    <property name="midLineWidth">
+     <number>1</number>
+    </property>
+    <property name="backgroundBrush">
+     <brush brushstyle="SolidPattern">
+      <color alpha="255">
+       <red>170</red>
+       <green>255</green>
+       <blue>127</blue>
+      </color>
+     </brush>
+    </property>
+    <property name="foregroundBrush">
+     <brush brushstyle="SolidPattern">
+      <color alpha="255">
+       <red>170</red>
+       <green>170</green>
+       <blue>255</blue>
+      </color>
+     </brush>
+    </property>
+    <property name="interactive">
+     <bool>false</bool>
+    </property>
+    <property name="renderHints">
+     <set>QPainter::SmoothPixmapTransform|QPainter::TextAntialiasing</set>
+    </property>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget_5">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>580</y>
+      <width>321</width>
+      <height>88</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_6" columnstretch="1,0,0">
+     <property name="leftMargin">
+      <number>1</number>
+     </property>
+     <item row="0" column="2">
+      <widget class="QComboBox" name="periodDim_2">
+       <item>
+        <property name="text">
+         <string>按年</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>按月</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>按天</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_12">
+       <property name="text">
+        <string>分期</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QSpinBox" name="period_2">
+       <property name="maximum">
+        <number>720</number>
+       </property>
+       <property name="value">
+        <number>24</number>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_18">
+       <property name="text">
+        <string>末次存款</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QDateEdit" name="dateEdit_4">
+       <property name="date">
+        <date>
+         <year>2015</year>
+         <month>1</month>
+         <day>1</day>
+        </date>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_19">
+       <property name="text">
+        <string>首次存款</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QDateEdit" name="dateEdit_5">
+       <property name="date">
+        <date>
+         <year>2023</year>
+         <month>1</month>
+         <day>1</day>
+        </date>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>796</width>
+     <width>727</width>
      <height>26</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu">
+   <widget class="QMenu" name="basicFuncs">
     <property name="title">
-     <string>汇率计算器</string>
+     <string>基本功能</string>
     </property>
    </widget>
-   <addaction name="menu"/>
+   <widget class="QMenu" name="advancedFuncs">
+    <property name="title">
+     <string>高级功能</string>
+    </property>
+   </widget>
+   <addaction name="basicFuncs"/>
+   <addaction name="advancedFuncs"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <action name="basicFunctions">
+   <property name="text">
+    <string>基本功能</string>
+   </property>
+  </action>
+  <action name="advancedFunctions">
+   <property name="text">
+    <string>高级功能</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
