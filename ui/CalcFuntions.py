@@ -4,8 +4,8 @@ from urllib3.connectionpool import xrange
 
 
 class CalcFunctionUtils:
-    template1 = "利率（{}）：{:.4%}"
-    template2 = "第{:>d}期\t本金：{:.2f} 元\t利息：{:.2f} 元\t本息和：{:.2f} 元"
+    template1 = "利率（{}）: {:.4%}"
+    template2 = "第{:>d}期\t本金:{:.2f}元\t利息:{:.2f}元\t本息和:{:.2f}元"
 
     @staticmethod
     def calcFixCapitalSimpleInterest(capital, interestRate, period):
