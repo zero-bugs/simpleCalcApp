@@ -20,10 +20,10 @@
       <x>30</x>
       <y>30</y>
       <width>291</width>
-      <height>61</height>
+      <height>71</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0" columnstretch="1,2,1">
+    <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0" columnstretch="1,0,0,0">
      <property name="leftMargin">
       <number>1</number>
      </property>
@@ -36,48 +36,7 @@
      <property name="bottomMargin">
       <number>1</number>
      </property>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>利率</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>元</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>本金</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QDoubleSpinBox" name="capitalMoney">
-       <property name="maximum">
-        <double>10000000000.000000000000000</double>
-       </property>
-       <property name="value">
-        <double>2000.000000000000000</double>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QDoubleSpinBox" name="interestRate">
-       <property name="suffix">
-        <string> %</string>
-       </property>
-       <property name="value">
-        <double>3.850000000000000</double>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="2">
+     <item row="2" column="3">
       <widget class="QComboBox" name="interestRateDim">
        <item>
         <property name="text">
@@ -96,6 +55,13 @@
        </item>
       </widget>
      </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>本金</string>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="0">
       <widget class="Line" name="line">
        <property name="orientation">
@@ -103,10 +69,51 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="1">
+      <widget class="QDoubleSpinBox" name="capitalMoney">
+       <property name="maximum">
+        <double>10000000000.000000000000000</double>
+       </property>
+       <property name="value">
+        <double>2000.000000000000000</double>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="1">
       <widget class="Line" name="line_4">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>元</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QDoubleSpinBox" name="interestRate">
+       <property name="suffix">
+        <string> %</string>
+       </property>
+       <property name="value">
+        <double>3.850000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>利率</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="Line" name="line_15">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>
@@ -290,58 +297,77 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>120</y>
+      <y>130</y>
       <width>291</width>
-      <height>101</height>
+      <height>111</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout_4" columnstretch="1,2,1">
+    <layout class="QGridLayout" name="gridLayout_4" columnstretch="1,2,0,1">
      <property name="leftMargin">
       <number>1</number>
      </property>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>分期</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QSpinBox" name="period">
-       <property name="maximum">
-        <number>720</number>
-       </property>
-       <property name="value">
-        <number>24</number>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QDateEdit" name="dateEdit_3">
-       <property name="date">
-        <date>
-         <year>2023</year>
-         <month>1</month>
-         <day>1</day>
-        </date>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
+     <item row="2" column="0">
       <widget class="QLabel" name="label_14">
        <property name="text">
-        <string>首次存款</string>
+        <string>起止日期</string>
        </property>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label_15">
-       <property name="text">
-        <string>末次存款</string>
+      <widget class="Line" name="line_11">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
       </widget>
      </item>
-     <item row="3" column="2">
+     <item row="2" column="3">
+      <widget class="QCheckBox" name="stageCheckBox">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="text">
+        <string>或者</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QDateEdit" name="startDateEdit">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="minimumDateTime">
+        <datetime>
+         <hour>16</hour>
+         <minute>0</minute>
+         <second>0</second>
+         <year>1755</year>
+         <month>9</month>
+         <day>13</day>
+        </datetime>
+       </property>
+       <property name="displayFormat">
+        <string>yyyy/MM/dd</string>
+       </property>
+       <property name="timeSpec">
+        <enum>Qt::UTC</enum>
+       </property>
+       <property name="date">
+        <date>
+         <year>2014</year>
+         <month>12</month>
+         <day>31</day>
+        </date>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="Line" name="line_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
       <widget class="QComboBox" name="periodDim">
        <item>
         <property name="text">
@@ -360,18 +386,44 @@
        </item>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QDateEdit" name="dateEdit_2">
+     <item row="4" column="1">
+      <widget class="QDateEdit" name="endDateEdit">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="displayFormat">
+        <string>yyyy/MM/dd</string>
+       </property>
+       <property name="timeSpec">
+        <enum>Qt::UTC</enum>
+       </property>
        <property name="date">
         <date>
-         <year>2015</year>
-         <month>1</month>
-         <day>1</day>
+         <year>2022</year>
+         <month>12</month>
+         <day>31</day>
         </date>
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>分期</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QSpinBox" name="period">
+       <property name="maximum">
+        <number>720</number>
+       </property>
+       <property name="value">
+        <number>24</number>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
       <widget class="Line" name="line_2">
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
@@ -381,10 +433,10 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
-      <widget class="Line" name="line_3">
+     <item row="0" column="2">
+      <widget class="Line" name="line_13">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>
@@ -399,15 +451,22 @@
       <height>301</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout_5" columnstretch="1,1,1,6,6">
-     <item row="0" column="1">
-      <widget class="QPushButton" name="optCalcDetails">
+    <layout class="QGridLayout" name="gridLayout_5" columnstretch="1,1,3,3,3">
+     <item row="0" column="3">
+      <widget class="QLabel" name="label_17">
        <property name="text">
-        <string>详细</string>
+        <string/>
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
+     <item row="0" column="4">
+      <widget class="QLabel" name="label_16">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
       <widget class="QPushButton" name="optSaveResult">
        <property name="layoutDirection">
         <enum>Qt::LeftToRight</enum>
@@ -439,20 +498,6 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="3">
-      <widget class="QLabel" name="label_17">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="4">
-      <widget class="QLabel" name="label_16">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="0" colspan="5">
       <widget class="QPlainTextEdit" name="detailsText">
        <property name="verticalScrollBarPolicy">
@@ -480,7 +525,7 @@
       <x>20</x>
       <y>20</y>
       <width>311</width>
-      <height>81</height>
+      <height>91</height>
      </rect>
     </property>
     <property name="focusPolicy">
@@ -550,7 +595,7 @@
       <x>360</x>
       <y>20</y>
       <width>341</width>
-      <height>161</height>
+      <height>171</height>
      </rect>
     </property>
     <property name="focusPolicy">
@@ -618,9 +663,9 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>110</y>
+      <y>120</y>
       <width>311</width>
-      <height>121</height>
+      <height>131</height>
      </rect>
     </property>
     <property name="focusPolicy">
@@ -684,6 +729,68 @@
      <set>QPainter::TextAntialiasing</set>
     </property>
    </widget>
+   <widget class="QWidget" name="formLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>210</y>
+      <width>251</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_12">
+       <property name="text">
+        <string>当前时间</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QDateTimeEdit" name="dateTimeEdit">
+       <property name="dateTime">
+        <datetime>
+         <hour>15</hour>
+         <minute>59</minute>
+         <second>59</second>
+         <year>2023</year>
+         <month>3</month>
+         <day>31</day>
+        </datetime>
+       </property>
+       <property name="maximumDateTime">
+        <datetime>
+         <hour>15</hour>
+         <minute>59</minute>
+         <second>59</second>
+         <year>9999</year>
+         <month>3</month>
+         <day>31</day>
+        </datetime>
+       </property>
+       <property name="maximumDate">
+        <date>
+         <year>9999</year>
+         <month>3</month>
+         <day>31</day>
+        </date>
+       </property>
+       <property name="currentSection">
+        <enum>QDateTimeEdit::MonthSection</enum>
+       </property>
+       <property name="displayFormat">
+        <string>yyyy/MM/dd HH:mm:ss</string>
+       </property>
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
+       <property name="timeSpec">
+        <enum>Qt::UTC</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
    <zorder>graphicsView</zorder>
    <zorder>graphicsView_3</zorder>
    <zorder>graphicsView_2</zorder>
@@ -691,6 +798,7 @@
    <zorder>gridLayoutWidget_2</zorder>
    <zorder>gridLayoutWidget_3</zorder>
    <zorder>gridLayoutWidget_4</zorder>
+   <zorder>formLayoutWidget</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
