@@ -52,23 +52,23 @@ class CalcFunctionUtils:
         interestRate = interestRate / 100
         if periodDim == Constants.PERIOD_BY_YEAR:
             if interestRateDim == Constants.RATE_BY_MONTH:
-                return 12 * interestRate
+                return Constants.RATE_YEAR_MONTH * interestRate
             elif interestRateDim == Constants.RATE_BY_DAY:
-                return 365 * interestRate
+                return Constants.RATE_YEAR_DAYS * interestRate
             else:
                 return interestRate
         elif periodDim == Constants.PERIOD_BY_MONTH:
             if interestRateDim == Constants.RATE_BY_YEAR:
-                return interestRate / 12
+                return interestRate / Constants.RATE_YEAR_MONTH
             elif interestRateDim == Constants.RATE_BY_DAY:
-                return 30 * interestRate
+                return Constants.RATE_MONTH_DAY * interestRate
             else:
                 return interestRate
         elif periodDim == Constants.PERIOD_BY_DAY:
             if interestRateDim == Constants.RATE_BY_YEAR:
-                return interestRate / 365
+                return interestRate / Constants.RATE_YEAR_DAYS
             elif interestRateDim == Constants.RATE_BY_MONTH:
-                return interestRate / 30
+                return interestRate / Constants.RATE_MONTH_DAY
             else:
                 return interestRate
 
@@ -93,7 +93,7 @@ class CalcFunctionUtils:
         return CalcFunctionUtils.calcFuncsReg(capital, interestRate, interestRateDim, period, periodDim, calcType)
 
     @staticmethod
-    def detailsFixCapitalSimpleInterest(capital, interestRate, period, startDate=None):
+    def detailsFixCapitalSimpleInterest(capital, interestRate, period):
         """单利定存详细内容"""
         result = list()
         capitalMoney = 0
@@ -109,7 +109,7 @@ class CalcFunctionUtils:
         return result
 
     @staticmethod
-    def detailsIncreCapitalSimpleInterest(capital, interestRate, period, startDate=None):
+    def detailsIncreCapitalSimpleInterest(capital, interestRate, period):
         """单利每期定存详细内容"""
         result = list()
         capitalMoney = 0
@@ -125,7 +125,7 @@ class CalcFunctionUtils:
         return result
 
     @staticmethod
-    def detailsFixCapitalCompoundedInterest(capital, interestRate, period, startDate=None):
+    def detailsFixCapitalCompoundedInterest(capital, interestRate, period):
         """复利定存详细内容"""
         result = list()
         capitalMoney = 0
@@ -139,7 +139,7 @@ class CalcFunctionUtils:
         return result
 
     @staticmethod
-    def detailsIncreCapitalCompoundedInterest(capital, interestRate, period, startDate=None):
+    def detailsIncreCapitalCompoundedInterest(capital, interestRate, period):
         """复利每期定存详细内容"""
         result = list()
         capitalMoney = 0
@@ -154,17 +154,17 @@ class CalcFunctionUtils:
         return result
 
     @staticmethod
-    def detailsAnnualToMonthInterest(capital, interestRate, period, startDate=None):
+    def detailsAnnualToMonthInterest(capital, interestRate, period):
         """单利定存详细内容"""
         pass
 
     @staticmethod
-    def detailsMonthToAnnualInterest(capital, interestRate, period, startDate=None):
+    def detailsMonthToAnnualInterest(capital, interestRate, period):
         """单利定存详细内容"""
         pass
 
     @staticmethod
-    def detailsFuncsReg(capital, interestRate, interestRateDim, period, periodDim, calcType, startDate=None):
+    def detailsFuncsReg(capital, interestRate, interestRateDim, period, periodDim, calcType):
         detailsFuncs = {
             Constants.CALC_BY_SINGLE_RATE: CalcFunctionUtils.detailsFixCapitalSimpleInterest,
             Constants.CALC_BY_PERIOD_SINGLE_RATE: CalcFunctionUtils.detailsIncreCapitalSimpleInterest,
@@ -182,6 +182,5 @@ class CalcFunctionUtils:
         return res
 
     @staticmethod
-    def printDetails(capital, interestRate, interestRateDim, period, periodDim, calcType, startDate=None):
-        return CalcFunctionUtils.detailsFuncsReg(capital, interestRate, interestRateDim, period, periodDim, calcType,
-                                                 startDate=None)
+    def printDetails(capital, interestRate, interestRateDim, period, periodDim, calcType):
+        return CalcFunctionUtils.detailsFuncsReg(capital, interestRate, interestRateDim, period, periodDim, calcType)

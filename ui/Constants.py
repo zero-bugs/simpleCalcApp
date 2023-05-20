@@ -4,8 +4,10 @@
 
 class Constants:
     # 打印模板
-    TEMPLATE1 = "利率（{}）: {:.4%}"
-    TEMPLATE2 = "第{:>d}期\t本金:{:.2f}元\t利息:{:.2f}元\t本息和:{:.2f}元"
+    TEMPLATE1 = "概要: 利率（{}）: {:.4%}"
+    TEMPLATE2 = "第{:>d}期|本金:{:.2f}元|利息:{:.2f}元|本息和:{:.2f}元"
+
+    TEMPLATE_SEQ = '|'
 
     # 时间格式模板
     DATE_TEMPLATE = "yyyy/MM/dd"
@@ -26,3 +28,7 @@ class Constants:
     CALC_BY_PERIOD_COMPOUND_RATE = '复利每期定存'
     CALC_BY_YEAR_TO_MONTH_RATE = '年息转月息'
     CALC_BY_MONTH_TO_YEAR_RATE = '月息转年息'
+
+    RATE_YEAR_MONTH = 12
+    RATE_MONTH_DAY = 30
+    RATE_YEAR_DAYS = 360

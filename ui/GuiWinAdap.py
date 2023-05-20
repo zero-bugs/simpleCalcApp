@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
+import calendar
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QMainWindow
@@ -125,24 +126,76 @@ class GuiWinAdap(QMainWindow, Ui_GuiForm):
                                                      periodDim, calcType)
         messages = CalcFunctionUtils.printDetails(capital, interestRate,
                                                   interestRateDim, period - 1,
-                                                  periodDim, calcType, startDate=startDate)
+                                                  periodDim, calcType)
         ct += capital
+        cit += capital
+        lastIt = 0
         if self.stageCheckBox_2.isChecked():
             # 可根据起始日期生成结束日期，后面补充确定
             daysLeft = (datetime.now() - endDateT).days
             [ct2, it2, cit2] = CalcFunctionUtils.calcResult(
-                capital + cit, interestRate,
+                cit, interestRate,
                 interestRateDim, daysLeft,
                 Constants.PERIOD_BY_DAY,
                 Constants.CALC_BY_SINGLE_RATE if calcType == Constants.CALC_BY_SINGLE_RATE else Constants.CALC_BY_COMPOUND_RATE)
-            it += it2
-            cit = cit2
+            lastIt = it2
+
+        # 最后一期的打印时间显示
+        if calcType == Constants.CALC_BY_PERIOD_SINGLE_RATE or calcType == Constants.CALC_BY_PERIOD_COMPOUND_RATE:
+            messages.append(Constants.TEMPLATE2.format(period, ct, lastIt, cit))
+
+        it += lastIt
+        cit += lastIt
+
+        # 处理打印信息
+        infos = list()
+        infos.append(messages.pop(0))
+        timeInfo = startDateT
+        for msg in messages:
+            curMonthDays = GuiWinAdap.getCurDateMaxMonthDays(timeInfo)
+            if timeInfo.day < startDateT.day:
+                timeInfo = timeInfo.replace(day=curMonthDays)
+            infos.append("{}{}{}".format(timeInfo.strftime(Constants.DATE_TEMPLATE_PY), Constants.TEMPLATE_SEQ, msg))
+            timeInfo = GuiWinAdap.getNextDate(timeInfo, periodDim)
 
         self.capitalTotal.setText("%0.2f" % ct)
         self.interestTotal.setText("%0.2f" % it)
         self.capitalInterestTotal.setText("%0.2f" % cit)
-        self.detailsText.setPlainText("{}".format(os.linesep.join(messages)))
+        self.detailsText.setPlainText("{}".format(os.linesep.join(infos)))
         return
+
+    @staticmethod
+    def getCurDateMaxMonthDays(dt: datetime):
+        curYear = dt.year
+        curMonth = dt.month
+        nextYear = curYear
+        nextMonth = curMonth + 1
+        if nextMonth > Constants.RATE_YEAR_MONTH:
+            nextYear += 1
+            nextMonth = 1
+        startT = dt.replace(day=1)
+        endT = dt.replace(year=nextYear, month=nextMonth, day=1)
+        return (endT - startT).days
+
+    @staticmethod
+    def getNextDate(startDate, periodDim):
+        if periodDim == Constants.PERIOD_BY_YEAR:
+            startDate = startDate.replace(year=(startDate.year + 1))
+        elif periodDim == Constants.PERIOD_BY_MONTH:
+            tmpYear = startDate.year
+            tmpMonth = startDate.month + 1
+            tmpDay = startDate.day
+            if tmpMonth > Constants.RATE_YEAR_MONTH:
+                tmpYear += 1
+                tmpMonth = 1
+            maxDaysOfMonth = GuiWinAdap.getCurDateMaxMonthDays(startDate.replace(year=tmpYear, month=tmpMonth, day=1))
+            tmpDay = tmpDay if startDate.day <= maxDaysOfMonth else maxDaysOfMonth
+            startDate = startDate.replace(year=tmpYear, month=tmpMonth, day=tmpDay)
+        elif periodDim == Constants.PERIOD_BY_DAY:
+            startDate += timedelta(days=1)
+        else:
+            pass
+        return startDate
 
     @staticmethod
     def getPeriodByDate(endDateT, startDateT, periodDim):
