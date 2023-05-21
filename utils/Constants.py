@@ -6,6 +6,7 @@ class Constants:
     # 打印模板
     TEMPLATE1 = "概要: 利率（{}）: {:.4%}"
     TEMPLATE2 = "第{:>d}期|本金:{:.2f}元|利息:{:.2f}元|本息和:{:.2f}元"
+    TEMPLATE3 = "至今|本金:{:.2f}元|利息:{:.2f}元|本息和:{:.2f}元"
 
     TEMPLATE_SEQ = '|'
 

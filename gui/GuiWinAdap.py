@@ -1,15 +1,15 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
-import calendar
 import os
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtWidgets import QMainWindow
-from dateutil import rrule
+from PyQt5.QtWidgets import QMainWindow, QMessageBox, QAction
 
-from ui.CalcFuntions import CalcFunctionUtils
-from ui.Constants import Constants
+from calc.CalcFuntions import CalcFunctionUtils
+from utils.CalcUtils import CalcUtils
+from utils.Constants import Constants
+from gui.CalcQMessageBox import CalcQMessageBox
 from ui.GuiForm import Ui_GuiForm
 
 
@@ -41,6 +41,10 @@ class GuiWinAdap(QMainWindow, Ui_GuiForm):
         self.initUI()
 
     def initUI(self):
+        self.setWindowTitle('SimpleCalcApp')
+        quitAction = QAction("Quit", self)
+        quitAction.triggered.connect(self.closeEvent)
+
         # 按照分期触发计算
         self.optCalcCapital.clicked.connect(self.emitOptCalcCapitalSignal)
         self.optCalcForExecutionSignal[float, float, str, int, str, str, str, str].connect(
@@ -49,6 +53,18 @@ class GuiWinAdap(QMainWindow, Ui_GuiForm):
         # 按照日期计算功能触发
         self.stageCheckBox.clicked.connect(self.emitOptCalcByDateSignal)
         self.optStageCheckBoxSignal[bool].connect(self.calcByDateAction)
+
+    def closeEvent(self, event):
+        """定义关闭事件"""
+        box = CalcQMessageBox()
+        box.setText('确认是否关闭？')
+        box.setWindowTitle("关闭提示")
+        box.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
+        box = box.exec()
+        if box == QMessageBox.Yes:
+            event.accept()
+        else:
+            event.ignore()
 
     def emitOptCalcByDateSignal(self, ):
         """选中启用起止日期功能"""
@@ -81,6 +97,21 @@ class GuiWinAdap(QMainWindow, Ui_GuiForm):
             self.calcType.currentText(),
             self.startDateEdit.date().toString(Constants.DATE_TEMPLATE),
             self.endDateEdit.date().toString(Constants.DATE_TEMPLATE))
+
+    def showMessage(self, level, title, text):
+        box = CalcQMessageBox()
+        if level == QMessageBox.Information:
+            box.setIcon(QMessageBox.Icon.Information)
+            box.information(self, title, text)
+        elif level == QMessageBox.Warning:
+            box.setIcon(QMessageBox.Icon.Warning)
+            box.warning(self, title, text)
+        elif level == QMessageBox.Critical:
+            box.setIcon(QMessageBox.Icon.Critical)
+            box.critical(self, title, text)
+        else:
+            box.setIcon(QMessageBox.Icon.Question)
+            box.question(self, title, text)
 
     def calcCapitalInterestTotalAction(self, capital, interestRate, interestRateDim, period, periodDim, calcType,
                                        startDate: str, endDate: str):
@@ -116,19 +147,35 @@ class GuiWinAdap(QMainWindow, Ui_GuiForm):
         startDateT = datetime.strptime(startDate, Constants.DATE_TEMPLATE_PY)
         endDateT = datetime.strptime(endDate, Constants.DATE_TEMPLATE_PY)
         if endDateT < startDateT:
-            # TODO 弹出对话框，
+            self.showMessage(QMessageBox.Warning, '参数错误', '结束时间大于开始时间')
             return
 
-        [_, _, _, period] = GuiWinAdap.getPeriodByDate(endDateT, startDateT,
-                                                       periodDim)
+        if endDateT > datetime.now() and self.stageCheckBox_2.isChecked():
+            self.showMessage(QMessageBox.Warning, '参数错误', '结束时间不能超过当前日期')
+            return
+
+        [_, period] = CalcUtils.guessPeriodByDate(startDateT, endDateT, periodDim)
         [ct, it, cit] = CalcFunctionUtils.calcResult(capital, interestRate,
-                                                     interestRateDim, period - 1,
+                                                     interestRateDim, period,
                                                      periodDim, calcType)
         messages = CalcFunctionUtils.printDetails(capital, interestRate,
-                                                  interestRateDim, period - 1,
+                                                  interestRateDim, period,
                                                   periodDim, calcType)
-        ct += capital
-        cit += capital
+
+        # 处理打印信息
+        infos = list()
+        infos.append(messages.pop(0))
+        curPeriod = 1
+        timeInfo = startDateT
+        for msg in messages:
+            infos.append("{}{}{}".format(timeInfo.strftime(Constants.DATE_TEMPLATE_PY), Constants.TEMPLATE_SEQ, msg))
+            timeInfo = CalcUtils.getNextDate(startDateT, curPeriod, periodDim)
+            curPeriod += 1
+
+        # 处理最后一期的计算结果
+        if calcType == Constants.CALC_BY_PERIOD_SINGLE_RATE or calcType == Constants.CALC_BY_PERIOD_COMPOUND_RATE:
+            ct += capital
+            cit += capital
         lastIt = 0
         if self.stageCheckBox_2.isChecked():
             # 可根据起始日期生成结束日期，后面补充确定
@@ -140,74 +187,22 @@ class GuiWinAdap(QMainWindow, Ui_GuiForm):
                 Constants.CALC_BY_SINGLE_RATE if calcType == Constants.CALC_BY_SINGLE_RATE else Constants.CALC_BY_COMPOUND_RATE)
             lastIt = it2
 
-        # 最后一期的打印时间显示
-        if calcType == Constants.CALC_BY_PERIOD_SINGLE_RATE or calcType == Constants.CALC_BY_PERIOD_COMPOUND_RATE:
-            messages.append(Constants.TEMPLATE2.format(period, ct, lastIt, cit))
+            # 最后一期的打印时间显示
+            if calcType == Constants.CALC_BY_PERIOD_SINGLE_RATE or calcType == Constants.CALC_BY_PERIOD_COMPOUND_RATE:
+                infos.append(CalcUtils.printMsgForTmpt2(ct, lastIt, cit, endDateT))
+            elif calcType == Constants.CALC_BY_SINGLE_RATE or calcType == Constants.CALC_BY_COMPOUND_RATE:
+                infos.append(CalcUtils.printMsgForTmpt2(ct, lastIt, cit, endDateT))
+        else:
+            # 最后一期的打印时间显示
+            if calcType == Constants.CALC_BY_PERIOD_SINGLE_RATE or calcType == Constants.CALC_BY_PERIOD_COMPOUND_RATE:
+                infos.append(CalcUtils.printMsgForTmpt3(lastIt, ct, cit, endDateT, period))
+            elif calcType == Constants.CALC_BY_SINGLE_RATE or calcType == Constants.CALC_BY_COMPOUND_RATE:
+                infos.append(CalcUtils.printMsgForTmpt3(lastIt, ct, cit, endDateT, period))
 
         it += lastIt
         cit += lastIt
-
-        # 处理打印信息
-        infos = list()
-        infos.append(messages.pop(0))
-        timeInfo = startDateT
-        for msg in messages:
-            curMonthDays = GuiWinAdap.getCurDateMaxMonthDays(timeInfo)
-            if timeInfo.day < startDateT.day:
-                timeInfo = timeInfo.replace(day=curMonthDays)
-            infos.append("{}{}{}".format(timeInfo.strftime(Constants.DATE_TEMPLATE_PY), Constants.TEMPLATE_SEQ, msg))
-            timeInfo = GuiWinAdap.getNextDate(timeInfo, periodDim)
-
         self.capitalTotal.setText("%0.2f" % ct)
         self.interestTotal.setText("%0.2f" % it)
         self.capitalInterestTotal.setText("%0.2f" % cit)
         self.detailsText.setPlainText("{}".format(os.linesep.join(infos)))
         return
-
-    @staticmethod
-    def getCurDateMaxMonthDays(dt: datetime):
-        curYear = dt.year
-        curMonth = dt.month
-        nextYear = curYear
-        nextMonth = curMonth + 1
-        if nextMonth > Constants.RATE_YEAR_MONTH:
-            nextYear += 1
-            nextMonth = 1
-        startT = dt.replace(day=1)
-        endT = dt.replace(year=nextYear, month=nextMonth, day=1)
-        return (endT - startT).days
-
-    @staticmethod
-    def getNextDate(startDate, periodDim):
-        if periodDim == Constants.PERIOD_BY_YEAR:
-            startDate = startDate.replace(year=(startDate.year + 1))
-        elif periodDim == Constants.PERIOD_BY_MONTH:
-            tmpYear = startDate.year
-            tmpMonth = startDate.month + 1
-            tmpDay = startDate.day
-            if tmpMonth > Constants.RATE_YEAR_MONTH:
-                tmpYear += 1
-                tmpMonth = 1
-            maxDaysOfMonth = GuiWinAdap.getCurDateMaxMonthDays(startDate.replace(year=tmpYear, month=tmpMonth, day=1))
-            tmpDay = tmpDay if startDate.day <= maxDaysOfMonth else maxDaysOfMonth
-            startDate = startDate.replace(year=tmpYear, month=tmpMonth, day=tmpDay)
-        elif periodDim == Constants.PERIOD_BY_DAY:
-            startDate += timedelta(days=1)
-        else:
-            pass
-        return startDate
-
-    @staticmethod
-    def getPeriodByDate(endDateT, startDateT, periodDim):
-        timeDelta = endDateT - startDateT
-        periodByYears = rrule.rrule(rrule.YEARLY, dtstart=startDateT, until=endDateT).count()
-        periodByMonths = rrule.rrule(rrule.MONTHLY, dtstart=startDateT, until=endDateT).count()
-        periodByDays = timeDelta.days
-
-        period = periodByDays
-        if periodDim == Constants.PERIOD_BY_YEAR:
-            period = periodByYears
-        elif periodDim == Constants.PERIOD_BY_MONTH:
-            period = periodByMonths
-
-        return [periodByYears, periodByMonths, periodByDays, period]

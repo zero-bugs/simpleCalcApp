@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 from urllib3.connectionpool import xrange
 
-from ui.Constants import Constants
+from utils.Constants import Constants
 
 
 class CalcFunctionUtils:
